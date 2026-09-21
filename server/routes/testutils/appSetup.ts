@@ -25,7 +25,7 @@ export const user: HmppsUser = {
 }
 
 const applicationInfo: ApplicationInfo = {
-  applicationName: 'hmpps-template-typescript',
+  applicationName: 'hmpps-probation-supervision-early-termination-ui',
   buildNumber: '123',
   gitRef: 'abc123',
   gitShortHash: 'abc',
