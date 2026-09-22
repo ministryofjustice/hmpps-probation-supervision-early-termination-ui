@@ -18,7 +18,15 @@ export default function routes(services: Services): Router {
       correlationId: req.id,
     })
 
-    const currentTime = await exampleService.getCurrentTime()
+   const currentTime = new Date().toLocaleTimeString('en-GB', {
+      hour12: false,
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    })
     return res.render('pages/index', { currentTime })
   })
 

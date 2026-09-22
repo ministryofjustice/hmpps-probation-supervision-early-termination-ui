@@ -1,0 +1,5 @@
+{% if feComponents.footer %}
+    {{ feComponents.footer | safe }}
+{% else %}
+    {% include "./_fallback_prob_fe_footer.njk" %}
+{% endif %}

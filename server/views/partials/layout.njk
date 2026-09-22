@@ -2,12 +2,25 @@
 
 {% block head %}
   <link href="{{ '/assets/css/index.css' | assetMap }}" rel="stylesheet"/>
+  {% if feComponents.cssIncludes %}
+    {% for css in feComponents.cssIncludes %}
+      <link href="{{ css }}" nonce="{{ cspNonce }}" rel="stylesheet"/>
+    {% endfor %}
+  {% else %}
+    <link href="/assets/css/fallback_prob_fe_app_header.css" nonce="{{ cspNonce }}" rel="stylesheet"/>
+    <link href="/assets/css/fallback_prob_fe_app_footer.css" nonce="{{ cspNonce }}" rel="stylesheet"/>
+  {% endif %}
 {% endblock %}
 
 {% block pageTitle %}{{pageTitle | default(applicationName)}}{% endblock %}
 
 {% block header %}
-  {% include "./header.njk" %}
+  {% include "./prob_fe_header.njk" %}
+  {% block banner %}{% endblock %}
+{% endblock %}
+
+{% block footer %}
+  {% include "./prob_fe_footer.njk" %}
 {% endblock %}
 
 {% block bodyStart %}
@@ -15,4 +28,7 @@
 
 {% block bodyEnd %}
   <script type="module" src="{{ '/assets/js/index.js' | assetMap }}"></script>
+  {% if not feComponents.header %}
+    <script type="module" src="{{ '/assets/js/fallback_prob_fe_app.js' | assetMap }}" nonce="{{ cspNonce }}"></script>
+  {% endif %}
 {% endblock %}

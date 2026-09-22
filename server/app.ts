@@ -15,9 +15,12 @@ import setUpStaticResources from './middleware/setUpStaticResources'
 import setUpWebRequestParsing from './middleware/setUpRequestParsing'
 import setUpWebSecurity from './middleware/setUpWebSecurity'
 import setUpWebSession from './middleware/setUpWebSession'
+import getFrontendComponents from './middleware/probationFEComponentsMiddleware'
+
 
 import routes from './routes'
 import type { Services } from './services'
+import baseController from "./baseController";
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -31,11 +34,13 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpWebSession())
   app.use(setUpWebRequestParsing())
   app.use(setUpStaticResources())
+  app.use(baseController())
   nunjucksSetup(app)
   app.use(setUpAuthentication())
   app.use(authorisationMiddleware())
   app.use(setUpCsrf())
   app.use(setUpCurrentUser())
+  app.use(getFrontendComponents(services.probationComponentsService))
   // For prison users, register the `addUserMetadataToTelemetry` middleware after middleware that retrieves caseload data.
   app.use(telemetryMiddleware.addUserMetadataToTelemetry())
 
