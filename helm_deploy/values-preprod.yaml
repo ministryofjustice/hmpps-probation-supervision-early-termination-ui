@@ -14,6 +14,8 @@ generic-service:
     EXAMPLE_API_URL: 'https://template-kotlin-preprod.hmpps.service.justice.gov.uk'
     ENVIRONMENT_NAME: PRE-PRODUCTION
     PROBATION_FRONTEND_COMPONENTS_API_URL: 'https://probation-frontend-components-preprod.hmpps.service.justice.gov.uk'
+    PROBATION_FRONTEND_COMPONENTS_CONNECT_SRC: 'https://probation-frontend-components-preprod.hmpps.service.justice.gov.uk'
+    PROBATION_FRONTEND_COMPONENTS_FONT_SRC: 'https://probation-frontend-components-preprod.hmpps.service.justice.gov.uk'
     MANAGE_PEOPLE_ON_PROBATION_URL: 'https://manage-people-on-probation-preprod.hmpps.service.justice.gov.uk'
     DELIUS_LINK: 'https://ndelius.pre-prod.delius.probation.hmpps.dsd.io'
     FLIPT_URL: 'https://feature-flags-manage-people-on-probation-preprod.hmpps.service.justice.gov.uk'
@@ -39,4 +41,4 @@ generic-service:
 
 
 generic-prometheus-alerts:
-  alertSeverity: hmpps_alerts_nonprod
+  alertSeverity: manage-people-on-probation-alerts-nonprod

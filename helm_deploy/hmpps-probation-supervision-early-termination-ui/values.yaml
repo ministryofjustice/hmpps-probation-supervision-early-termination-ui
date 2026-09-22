@@ -3,7 +3,7 @@ generic-service:
   productId: 'HMPPS541' # productId for the product that this belongs too, i.e. DPS001, see README.md for details
 
   # the IRSA service account name for accessing AWS resources (e.g: audit SQS queue)
-  # serviceAccountName: "hmpps-probation-supervision-early-termination-ui"
+  serviceAccountName: "hmpps-probation-supervision-early-termination-ui"
 
   replicaCount: 4
 
@@ -15,6 +15,9 @@ generic-service:
   ingress:
     enabled: true
     host: app-hostname.local # override per environment
+    modsecurity_enabled: true
+    modsecurity_audit_enabled: true
+    modsecurity_github_team: hmpps-manage-people-on-probation
     tlsSecretName: hmpps-probation-supervision-early-termination-ui-cert
 
   livenessProbe:
@@ -32,6 +35,7 @@ generic-service:
     REDIS_ENABLED: 'true'
     REDIS_TLS_ENABLED: 'true'
     TOKEN_VERIFICATION_ENABLED: 'true'
+    AUDIT_SQS_REGION: 'eu-west-2'
     AUDIT_ENABLED: 'false'
     AUDIT_SERVICE_NAME: 'hmpps-probation-supervision-early-termination-ui' # Your audit service name
 
@@ -57,9 +61,16 @@ generic-service:
       APPLICATIONINSIGHTS_CONNECTION_STRING: "APPLICATIONINSIGHTS_CONNECTION_STRING"
     # This secret will need to be created in your namespace if you add audit integration
     # IRSA configuration in your namespace will also be required.
-    # sqs-hmpps-audit-secret:
-    #  AUDIT_SQS_QUEUE_URL: "sqs_queue_url"
+    sqs-hmpps-audit-secret:
+      AUDIT_SQS_QUEUE_URL: "sqs_queue_url"
     #  AUDIT_SQS_QUEUE_NAME: "sqs_queue_name"
+
+  allowlist:
+    groups:
+      - digital_staff_and_mojo
+      - unilink_staff
+      - moj_cloud_platform
+      - probation
 
 generic-prometheus-alerts:
   targetApplication: hmpps-probation-supervision-early-termination-ui
