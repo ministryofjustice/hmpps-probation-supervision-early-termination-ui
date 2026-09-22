@@ -33,6 +33,7 @@ const getBuildConfig = () => {
         path.join(cwd, 'assets/js/*.js'),
         path.join(cwd, 'assets/js/*.ts'),
         path.join(cwd, 'assets/scss/*.scss'),
+        path.join(cwd, 'assets/css/*.css'),
       ]),
       copy: [
         {

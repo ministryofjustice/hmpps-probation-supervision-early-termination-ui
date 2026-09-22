@@ -14,6 +14,10 @@ generic-service:
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-dev.prison.service.justice.gov.uk"
     EXAMPLE_API_URL: 'https://template-kotlin-dev.hmpps.service.justice.gov.uk'
     ENVIRONMENT_NAME: DEV
+    PROBATION_FRONTEND_COMPONENTS_API_URL: 'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk'
+    MANAGE_PEOPLE_ON_PROBATION_URL: 'https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk'
+    DELIUS_LINK: 'https://ndelius.test.probation.service.justice.gov.uk'
+    FLIPT_URL: 'https://feature-flags-manage-people-on-probation-dev.hmpps.service.justice.gov.uk'
 
   allowlist:
     # Configure groups as appropriate to give the minimum ingress access required:

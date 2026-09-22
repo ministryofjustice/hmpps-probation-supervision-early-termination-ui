@@ -9,7 +9,15 @@ jest.mock('./config', () => ({
 }))
 
 jest.mock('./applicationInfo', () => ({
-  name: 'test-app-name',
+  __esModule: true,
+  default: jest.fn(() => ({
+    applicationName: 'test-app-name',
+    buildNumber: '123',
+    gitRef: 'abcdef1234567',
+    gitShortHash: 'abcdef1',
+    productId: 'test-product',
+    branchName: 'test-branch',
+  })),
 }))
 
 describe('baseController', () => {

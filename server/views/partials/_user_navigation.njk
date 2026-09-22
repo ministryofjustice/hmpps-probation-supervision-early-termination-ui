@@ -17,7 +17,7 @@
         <nav class="moj-primary-navigation" aria-label="Primary navigation">
           <ul class="moj-primary-navigation__list">
             <li class="moj-primary-navigation__item">
-              <a class="moj-primary-navigation__link" aria-current="home" href="{{ manageProbationUrl }}/">Home</a>
+              <a class="moj-primary-navigation__link" {% if home %}aria-current="page"{% endif %} href="{{ manageProbationUrl }}/">Home</a>
             </li>
             <li class="moj-primary-navigation__item">
               <a class="moj-primary-navigation__link"  href="#">Cases</a>
