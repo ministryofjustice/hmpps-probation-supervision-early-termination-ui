@@ -6,7 +6,6 @@ import ExampleApiClient from './exampleApiClient'
 import applicationInfoSupplier from '../applicationInfo'
 import ProbationFrontendComponentsApiClient from './probationFrontendComponentsClient'
 
-
 const applicationInfo = applicationInfoSupplier()
 
 export const dataAccess = () => {
@@ -26,4 +25,4 @@ export const dataAccess = () => {
 
 export type DataAccess = ReturnType<typeof dataAccess>
 
-export { AuthenticationClient, ExampleApiClient, ProbationFrontendComponentsApiClient}
+export { AuthenticationClient, ExampleApiClient, ProbationFrontendComponentsApiClient }

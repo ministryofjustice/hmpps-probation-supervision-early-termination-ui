@@ -6,7 +6,7 @@ import config from '../config'
 import ProbationComponentsService from './ProbationComponentsService'
 
 export const services = () => {
-  const { applicationInfo, exampleApiClient, probationFrontendComponentsApiClient,} = dataAccess()
+  const { applicationInfo, exampleApiClient, probationFrontendComponentsApiClient } = dataAccess()
 
   const auditService = AuditServiceFactory.createInstance(config.sqs.audit, logger)
 

@@ -18,7 +18,7 @@ export default function routes(services: Services): Router {
       correlationId: req.id,
     })
 
-   const currentTime = new Date().toLocaleTimeString('en-GB', {
+    const currentTime = new Date().toLocaleTimeString('en-GB', {
       hour12: false,
       day: '2-digit',
       month: '2-digit',

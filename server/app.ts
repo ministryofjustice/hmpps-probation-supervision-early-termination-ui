@@ -17,10 +17,9 @@ import setUpWebSecurity from './middleware/setUpWebSecurity'
 import setUpWebSession from './middleware/setUpWebSession'
 import getFrontendComponents from './middleware/probationFEComponentsMiddleware'
 
-
 import routes from './routes'
 import type { Services } from './services'
-import baseController from "./baseController";
+import baseController from './baseController'
 
 export default function createApp(services: Services): express.Application {
   const app = express()

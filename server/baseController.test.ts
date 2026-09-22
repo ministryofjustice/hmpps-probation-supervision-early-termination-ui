@@ -1,23 +1,22 @@
 import type { Request, Response } from 'express'
 import baseController from './baseController'
-import getApplicationInfo from './applicationInfo'
 import config from './config'
 
-jest.mock('./utils/azureAppInsights')
 jest.mock('./config', () => ({
   appInsights: {
     connectionString: 'test-connection-string',
   },
 }))
 
-const defaultNameMock = getApplicationInfo as jest.Mock
+jest.mock('./applicationInfo', () => ({
+  name: 'test-app-name',
+}))
 
 describe('baseController', () => {
   let next: jest.Mock
 
   beforeEach(() => {
     next = jest.fn()
-    defaultNameMock.mockReturnValue('test-app-name')
   })
 
   function createReqRes(url: string): { req: Request; res: Response } {
@@ -31,12 +30,12 @@ describe('baseController', () => {
 
     baseController()(req, res, next)
 
-    expect(res.locals.applicationInsightsConnectionString).toEqual(config.appInsights.connectionString)
-    expect(res.locals.applicationInsightsRoleName).toEqual('test-app-name')
-    expect(res.locals.home).toEqual(true)
-    expect(res.locals.cases).toEqual(false)
-    expect(res.locals.search).toEqual(false)
-    expect(next).toHaveBeenCalled()
+    expect(res.locals.applicationInsightsConnectionString).toBe(config.appInsights.connectionString)
+    expect(res.locals.applicationInsightsRoleName).toBe('test-app-name')
+    expect(res.locals.home).toBe(true)
+    expect(res.locals.cases).toBe(false)
+    expect(res.locals.search).toBe(false)
+    expect(next).toHaveBeenCalledTimes(1)
   })
 
   it('sets cases to true for /case', () => {
@@ -44,12 +43,12 @@ describe('baseController', () => {
 
     baseController()(req, res, next)
 
-    expect(res.locals.applicationInsightsConnectionString).toEqual(config.appInsights.connectionString)
-    expect(res.locals.applicationInsightsRoleName).toEqual('test-app-name')
-    expect(res.locals.home).toEqual(false)
-    expect(res.locals.cases).toEqual(true)
-    expect(res.locals.search).toEqual(false)
-    expect(next).toHaveBeenCalled()
+    expect(res.locals.applicationInsightsConnectionString).toBe(config.appInsights.connectionString)
+    expect(res.locals.applicationInsightsRoleName).toBe('test-app-name')
+    expect(res.locals.home).toBe(false)
+    expect(res.locals.cases).toBe(true)
+    expect(res.locals.search).toBe(false)
+    expect(next).toHaveBeenCalledTimes(1)
   })
 
   it('sets search to true for /search', () => {
@@ -57,12 +56,12 @@ describe('baseController', () => {
 
     baseController()(req, res, next)
 
-    expect(res.locals.applicationInsightsConnectionString).toEqual(config.appInsights.connectionString)
-    expect(res.locals.applicationInsightsRoleName).toEqual('test-app-name')
-    expect(res.locals.home).toEqual(false)
-    expect(res.locals.cases).toEqual(false)
-    expect(res.locals.search).toEqual(true)
-    expect(next).toHaveBeenCalled()
+    expect(res.locals.applicationInsightsConnectionString).toBe(config.appInsights.connectionString)
+    expect(res.locals.applicationInsightsRoleName).toBe('test-app-name')
+    expect(res.locals.home).toBe(false)
+    expect(res.locals.cases).toBe(false)
+    expect(res.locals.search).toBe(true)
+    expect(next).toHaveBeenCalledTimes(1)
   })
 
   it('sets all flags to false for an unrelated path', () => {
@@ -70,11 +69,11 @@ describe('baseController', () => {
 
     baseController()(req, res, next)
 
-    expect(res.locals.applicationInsightsConnectionString).toEqual(config.appInsights.connectionString)
-    expect(res.locals.applicationInsightsRoleName).toEqual('test-app-name')
-    expect(res.locals.home).toEqual(false)
-    expect(res.locals.cases).toEqual(false)
-    expect(res.locals.search).toEqual(false)
-    expect(next).toHaveBeenCalled()
+    expect(res.locals.applicationInsightsConnectionString).toBe(config.appInsights.connectionString)
+    expect(res.locals.applicationInsightsRoleName).toBe('test-app-name')
+    expect(res.locals.home).toBe(false)
+    expect(res.locals.cases).toBe(false)
+    expect(res.locals.search).toBe(false)
+    expect(next).toHaveBeenCalledTimes(1)
   })
 })

@@ -1,6 +1,6 @@
 import ProbationFrontendComponentsApiClient from '../data/probationFrontendComponentsClient'
 
-import {AvailableComponent, Component, ComponentsResponse} from '../@types/probationComponent'
+import { AvailableComponent, Component, ComponentsResponse } from '../@types/probationComponent'
 import logger from '../../logger'
 
 export default class ProbationComponentsService {
