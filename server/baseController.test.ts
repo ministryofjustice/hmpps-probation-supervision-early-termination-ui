@@ -27,8 +27,8 @@ describe('baseController', () => {
     next = jest.fn()
   })
 
-  function createReqRes(url: string): { req: Request; res: Response } {
-    const req = { url } as Request
+  function createReqRes(path: string): { req: Request; res: Response } {
+    const req = { path } as Request
     const res = { locals: {} } as unknown as Response
     return { req, res }
   }

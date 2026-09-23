@@ -27,12 +27,12 @@ export default function getFrontendComponents(probationComponentsService: Probat
       // will display fallback pages
       return next()
     }
-
+    if (!header?.html || !footer?.html) return next()
     res.locals.feComponents = {
-      header: replaceHashWithSlash(header?.html),
-      footer: footer?.html,
-      cssIncludes: [...(header?.css || []), ...(footer?.css || [])],
-      jsIncludes: [...(header?.javascript || []), ...(footer?.javascript || [])],
+      header: replaceHashWithSlash(header.html),
+      footer: footer.html,
+      cssIncludes: [...(header.css || []), ...(footer.css || [])],
+      jsIncludes: [...(header.javascript || []), ...(footer.javascript || [])],
     }
 
     if (req?.session) {

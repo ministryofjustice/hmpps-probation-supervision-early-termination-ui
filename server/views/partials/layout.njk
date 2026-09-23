@@ -7,8 +7,8 @@
       <link href="{{ css }}" nonce="{{ cspNonce }}" rel="stylesheet"/>
     {% endfor %}
   {% else %}
-    <link href="/assets/css/fallback_prob_fe_app_header.css" nonce="{{ cspNonce }}" rel="stylesheet"/>
-    <link href="/assets/css/fallback_prob_fe_app_footer.css" nonce="{{ cspNonce }}" rel="stylesheet"/>
+    <link href="{{ '/assets/css/fallback_prob_fe_app_header.css' | assetMap }}" nonce="{{ cspNonce }}" rel="stylesheet"/>
+    <link href="{{ '/assets/css/fallback_prob_fe_app_footer.css' | assetMap }}" nonce="{{ cspNonce }}" rel="stylesheet"/>
   {% endif %}
 {% endblock %}
 

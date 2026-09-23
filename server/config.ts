@@ -99,29 +99,13 @@ export default {
     connectionString: get('APPLICATIONINSIGHTS_CONNECTION_STRING', null, requiredInProduction),
   },
   probationFrontendComponents: {
-    connectSrc: get(
-      'PROBATION_FRONTEND_COMPONENTS_CONNECT_SRC',
-      'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk',
-      requiredInProduction,
-    ),
-    fontSrc: get(
-      'PROBATION_FRONTEND_COMPONENTS_FONT_SRC',
-      'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk',
-      requiredInProduction,
-    ),
+    connectSrc: get('PROBATION_FRONTEND_COMPONENTS_CONNECT_SRC', 'http://localhost:8100', requiredInProduction),
+    fontSrc: get('PROBATION_FRONTEND_COMPONENTS_FONT_SRC', 'http://localhost:8100', requiredInProduction),
   },
   ingressUrl: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   environmentName: get('ENVIRONMENT_NAME', ''),
-  manageProbationUrl: get(
-    'MANAGE_PEOPLE_ON_PROBATION_URL',
-    'https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk',
-    requiredInProduction,
-  ),
+  manageProbationUrl: get('MANAGE_PEOPLE_ON_PROBATION_URL', 'http://localhost:3000', requiredInProduction),
   delius: {
     link: get('DELIUS_LINK', 'https://ndelius-dummy-url', requiredInProduction),
-  },
-  flipt: {
-    url: get('FLIPT_URL', 'http://localhost:8100', requiredInProduction),
-    token: get('FLIPT_TOKEN', 'FLIPT_TOKEN', requiredInProduction),
   },
 }
