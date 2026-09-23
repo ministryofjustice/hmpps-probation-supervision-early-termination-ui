@@ -17,17 +17,19 @@ export default class AbstractPage {
 
   protected constructor(page: Page) {
     this.page = page
-    this.phaseBanner = page.getByTestId('header-phase-banner')
-    this.usersName = page.getByTestId('header-user-name')
+    this.phaseBanner = page.getByTestId('probation-common-environment-tag')
+    this.usersName = page.getByTestId('probation-common-header-user-name')
     this.signoutLink = page.getByText('Sign out')
-    this.manageUserDetails = page.getByTestId('manageDetails')
+    this.manageUserDetails = page.getByText('Your account')
   }
 
   async signOut() {
+    await this.usersName.click()
     await this.signoutLink.first().click()
   }
 
   async clickManageUserDetails() {
+    await this.usersName.click()
     await this.manageUserDetails.first().click()
   }
 }

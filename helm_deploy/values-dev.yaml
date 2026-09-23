@@ -6,6 +6,7 @@ generic-service:
 
   ingress:
     host: probation-supervision-early-termination-ui-dev.hmpps.service.justice.gov.uk
+    className: modsec-non-prod
 
   env:
     LOG_LEVEL: 'debug'
@@ -14,6 +15,12 @@ generic-service:
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-dev.prison.service.justice.gov.uk"
     EXAMPLE_API_URL: 'https://template-kotlin-dev.hmpps.service.justice.gov.uk'
     ENVIRONMENT_NAME: DEV
+    PROBATION_FRONTEND_COMPONENTS_API_URL: 'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk'
+    PROBATION_FRONTEND_COMPONENTS_CONNECT_SRC: 'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk'
+    PROBATION_FRONTEND_COMPONENTS_FONT_SRC: 'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk'
+    MANAGE_PEOPLE_ON_PROBATION_URL: 'https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk'
+    DELIUS_LINK: 'https://ndelius.test.probation.service.justice.gov.uk'
+    FLIPT_URL: 'https://feature-flags-manage-people-on-probation-dev.hmpps.service.justice.gov.uk'
 
   allowlist:
     # Configure groups as appropriate to give the minimum ingress access required:
@@ -32,7 +39,8 @@ generic-service:
   #       to configure modsecurity rules to suit your needs. Further information can be found here:
   #       https://user-guide.cloud-platform.service.justice.gov.uk/documentation/networking/modsecurity.html#modsecurity-web-application-firewall
 
-
+  scheduledDowntime:
+    enabled: true
 
 generic-prometheus-alerts:
-  alertSeverity: hmpps_alerts_nonprod
+  alertSeverity: manage-people-on-probation-alerts-nonprod

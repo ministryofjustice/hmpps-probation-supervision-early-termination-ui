@@ -29,11 +29,17 @@ export default function setUpWebSecurity(): Router {
             "'self'",
             (_req: IncomingMessage, res: ServerResponse) => `'nonce-${(res as Response).locals.cspNonce}'`,
           ],
+          connectSrc: [
+            "'self'",
+            'js.monitor.azure.com',
+            '*.applicationinsights.azure.com/v2/track',
+            config.probationFrontendComponents.connectSrc,
+          ],
           styleSrc: [
             "'self'",
             (_req: IncomingMessage, res: ServerResponse) => `'nonce-${(res as Response).locals.cspNonce}'`,
           ],
-          fontSrc: ["'self'"],
+          fontSrc: ["'self'", config.probationFrontendComponents.fontSrc],
           formAction: [`'self' ${config.apis.hmppsAuth.externalUrl}`],
           ...(config.production ? {} : { upgradeInsecureRequests: null }),
         },

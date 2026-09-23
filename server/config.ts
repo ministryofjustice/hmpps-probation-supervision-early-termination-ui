@@ -73,6 +73,15 @@ export default {
       agent: new AgentConfig(Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 5000))),
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
+    probationFrontendComponentsApi: {
+      url: get('PROBATION_FRONTEND_COMPONENTS_API_URL', 'http://localhost:8100', requiredInProduction),
+      healthPath: '/health/ping',
+      timeout: {
+        response: Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_RESPONSE', 10000))),
+    },
     exampleApi: {
       url: get('EXAMPLE_API_URL', 'http://localhost:8080', requiredInProduction),
       healthPath: '/health/ping',
@@ -86,6 +95,17 @@ export default {
   sqs: {
     audit: auditConfig(),
   },
+  appInsights: {
+    connectionString: get('APPLICATIONINSIGHTS_CONNECTION_STRING', null, requiredInProduction),
+  },
+  probationFrontendComponents: {
+    connectSrc: get('PROBATION_FRONTEND_COMPONENTS_CONNECT_SRC', 'http://localhost:8100', requiredInProduction),
+    fontSrc: get('PROBATION_FRONTEND_COMPONENTS_FONT_SRC', 'http://localhost:8100', requiredInProduction),
+  },
   ingressUrl: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   environmentName: get('ENVIRONMENT_NAME', ''),
+  manageProbationUrl: get('MANAGE_PEOPLE_ON_PROBATION_URL', 'http://localhost:3000', requiredInProduction),
+  delius: {
+    link: get('DELIUS_LINK', 'https://ndelius-dummy-url', requiredInProduction),
+  },
 }

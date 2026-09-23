@@ -1,0 +1,36 @@
+{%- from "moj/components/notification-badge/macro.njk" import mojNotificationBadge -%}
+{%- from "moj/components/primary-navigation/macro.njk" import mojPrimaryNavigation -%}
+
+{% set titleHtml %}
+  <div class="app-organisation-nav-title">
+    <span class="govuk-body-s"><strong>{{ caseload.provider }}</strong></span>
+  </div>
+{% endset %}
+
+{% if user %}
+  <div class="moj-primary-navigation">
+    <div class="moj-primary-navigation__container">
+      <div class="app-organisation-nav-title">
+        <span class="govuk-body-s"><strong>{{ caseload.provider }}</strong></span>
+      </div>
+      <div class="moj-primary-navigation__nav">
+        <nav class="moj-primary-navigation" aria-label="Primary navigation">
+          <ul class="moj-primary-navigation__list">
+            <li class="moj-primary-navigation__item">
+              <a class="moj-primary-navigation__link" {% if home %}aria-current="page"{% endif %} href="{{ manageProbationUrl }}/">Home</a>
+            </li>
+            <li class="moj-primary-navigation__item">
+              <a class="moj-primary-navigation__link"  href="#">Cases</a>
+            </li>
+            <li class="moj-primary-navigation__item">
+              <a class="moj-primary-navigation__link" href="#">Search</a>
+            </li>
+            <li class="moj-primary-navigation__item">
+              <a class="moj-primary-navigation__link" href="#"> Alerts {{ mojNotificationBadge({text: alertsCount}) }}</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+{% endif %}

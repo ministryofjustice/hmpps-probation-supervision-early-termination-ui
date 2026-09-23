@@ -14,6 +14,7 @@ export default function nunjucksSetup(app: express.Express): void {
   app.locals.applicationName = 'HMPPS Probation Supervision Early Termination Ui'
   app.locals.environmentName = config.environmentName
   app.locals.environmentNameColour = config.environmentName === 'PRE-PRODUCTION' ? 'govuk-tag--green' : ''
+  app.locals.manageProbationUrl = config.manageProbationUrl
   let assetManifest: Record<string, string> = {}
 
   try {
@@ -27,9 +28,13 @@ export default function nunjucksSetup(app: express.Express): void {
 
   const njkEnv = nunjucks.configure(
     [
+      path.join(__dirname, 'server/views'),
       path.join(__dirname, '../../server/views'),
       'node_modules/govuk-frontend/dist/',
+      'node_modules/govuk-frontend/dist/components/',
       'node_modules/@ministryofjustice/frontend/',
+      'node_modules/@ministryofjustice/frontend/moj/components/',
+      'node_modules/@ministryofjustice/probation-search-frontend/components',
     ],
     {
       autoescape: true,

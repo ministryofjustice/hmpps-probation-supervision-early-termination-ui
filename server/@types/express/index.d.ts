@@ -32,6 +32,7 @@ export declare global {
       appInsightsConnectionString?: string
       appInsightsApplicationName?: string
       buildNumber?: string
+      email?: string
     }
   }
 }
