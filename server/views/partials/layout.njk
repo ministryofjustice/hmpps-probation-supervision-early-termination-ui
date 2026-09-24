@@ -1,4 +1,7 @@
 {% extends "govuk/template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block head %}
   <link href="{{ '/assets/css/index.css' | assetMap }}" rel="stylesheet"/>
@@ -20,6 +23,9 @@
 {% endblock %}
 
 {% block footer %}
+  {% if not hideSurveyUsefulSections %}
+    {% include "./_survey-useful.njk" %}
+  {% endif %}
   {% include "./prob_fe_footer.njk" %}
 {% endblock %}
 
@@ -27,12 +33,14 @@
 {% endblock %}
 
 {% block bodyEnd %}
-  <script type="module" src="{{ '/assets/js/index.js' | assetMap }}"></script>
   {% if feComponents.jsIncludes %}
-    {% for javascript in feComponents.jsIncludes %}
-      <script src="{{ javascript }}" nonce="{{ cspNonce }}"></script>
+    {% for js in feComponents.jsIncludes %}
+      <script  type="module" src="{{ js }}" nonce="{{ cspNonce }}"></script>
     {% endfor %}
   {% else %}
     <script type="module" src="{{ '/assets/js/fallback_prob_fe_app.js' | assetMap }}" nonce="{{ cspNonce }}"></script>
   {% endif %}
+  <script nonce="{{ cspNonce }}">
+    window.csrfToken = "{{ csrfToken }}";
+  </script>
 {% endblock %}
