@@ -1,0 +1,29 @@
+name: Sonarqube
+on:
+  workflow_call:
+jobs:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: download the coverage artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: cypress_coverage_*
+          merge-multiple: true
+          path: coverage/
+      - name: download the results artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: cypress_results_*
+          merge-multiple: true
+          path: test_results/
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@v8
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_SCANNER_OPTS: '-Dproject.settings=./sonar-project.properties'
