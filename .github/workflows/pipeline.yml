@@ -44,7 +44,7 @@ jobs:
   node_build:
     name: node build
     uses: ministryofjustice/hmpps-github-actions/.github/workflows/node_build.yml@v2 # WORKFLOW_VERSION
-    with: 
+    with:
       install_command: 'npm run setup'
       npm_version: '12.0.2'
   # generic node unit tests - feel free to override with local tests if required
@@ -57,6 +57,11 @@ jobs:
     name: node integration tests
     uses: ministryofjustice/hmpps-github-actions/.github/workflows/node_integration_tests.yml@v2 # WORKFLOW_VERSION
     needs: [node_build]
+  sonarcloud:
+    name: SonarCloud
+    uses: ./.github/workflows/sonarqube.yml
+    needs: [ node_unit_tests, node_integration_tests ]
+    secrets: inherit
   helm_lint:
     strategy:
       matrix:
