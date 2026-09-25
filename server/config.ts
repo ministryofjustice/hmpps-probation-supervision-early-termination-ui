@@ -99,8 +99,8 @@ export default {
     connectionString: get('APPLICATIONINSIGHTS_CONNECTION_STRING', null, requiredInProduction),
   },
   probationFrontendComponents: {
-    connectSrc: get('PROBATION_FRONTEND_COMPONENTS_CONNECT_SRC', 'http://localhost:8100', requiredInProduction),
-    fontSrc: get('PROBATION_FRONTEND_COMPONENTS_FONT_SRC', 'http://localhost:8100', requiredInProduction),
+    connectSrc: get('PROBATION_FRONTEND_COMPONENTS_CONNECT_SRC', 'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk', requiredInProduction),
+    fontSrc: get('PROBATION_FRONTEND_COMPONENTS_FONT_SRC', 'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk', requiredInProduction),
   },
   ingressUrl: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   environmentName: get('ENVIRONMENT_NAME', ''),
