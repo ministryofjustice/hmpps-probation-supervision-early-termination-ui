@@ -33,6 +33,7 @@
 {% endblock %}
 
 {% block bodyEnd %}
+  <script type="module" src="{{ '/assets/js/index.js' | assetMap }}"></script>
   {% if feComponents.jsIncludes %}
     {% for js in feComponents.jsIncludes %}
       <script  type="module" src="{{ js }}" nonce="{{ cspNonce }}"></script>
@@ -42,5 +43,10 @@
   {% endif %}
   <script nonce="{{ cspNonce }}">
     window.csrfToken = "{{ csrfToken }}";
+  </script>
+  <script nonce="{{ cspNonce }}">
+    document.addEventListener('DOMContentLoaded', function () {
+      document.initialiseTelemetry('{{ applicationInsightsConnectionString | default(' ') }}', '{{ applicationInsightsRoleName }}', '{{ user.username }}')
+    })
   </script>
 {% endblock %}
