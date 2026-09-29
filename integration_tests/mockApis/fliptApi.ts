@@ -24,7 +24,10 @@ export default {
         status: 200,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          namespace: { key: 'probation-supervision-early-termination-ui', name: 'probation-supervision-early-termination-ui' },
+          namespace: {
+            key: 'probation-supervision-early-termination-ui',
+            name: 'probation-supervision-early-termination-ui',
+          },
           flags: flags.map(flag => buildBooleanFlag(flag.key, flag.enabled)),
         },
       },
