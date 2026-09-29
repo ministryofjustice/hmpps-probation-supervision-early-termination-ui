@@ -5,6 +5,7 @@ import logger from '../../logger'
 import ExampleApiClient from './exampleApiClient'
 import applicationInfoSupplier from '../applicationInfo'
 import ProbationFrontendComponentsApiClient from './probationFrontendComponentsClient'
+import MasApiClient from './masApiClient'
 
 const applicationInfo = applicationInfoSupplier()
 
@@ -20,6 +21,7 @@ export const dataAccess = () => {
     hmppsAuthClient,
     exampleApiClient: new ExampleApiClient(hmppsAuthClient),
     probationFrontendComponentsApiClient: new ProbationFrontendComponentsApiClient(),
+    masApiClient: new MasApiClient(hmppsAuthClient),
   }
 }
 

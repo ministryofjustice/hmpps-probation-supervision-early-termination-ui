@@ -20,6 +20,7 @@ import getFrontendComponents from './middleware/probationFEComponentsMiddleware'
 import routes from './routes'
 import type { Services } from './services'
 import baseController from './baseController'
+import setUpFlags from './middleware/setUpFlags'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -37,8 +38,9 @@ export default function createApp(services: Services): express.Application {
   nunjucksSetup(app)
   app.use(setUpAuthentication())
   app.use(authorisationMiddleware())
+  app.use(setUpFlags(services))
   app.use(setUpCsrf())
-  app.use(setUpCurrentUser())
+  app.use(setUpCurrentUser(services.masApiClient))
   app.use(getFrontendComponents(services.probationComponentsService))
   // For prison users, register the `addUserMetadataToTelemetry` middleware after middleware that retrieves caseload data.
   app.use(telemetryMiddleware.addUserMetadataToTelemetry())

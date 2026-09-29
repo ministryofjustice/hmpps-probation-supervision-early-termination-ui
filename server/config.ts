@@ -82,6 +82,15 @@ export default {
       },
       agent: new AgentConfig(Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_RESPONSE', 10000))),
     },
+    masApi: {
+      url: get('MAS_API_URL', 'http://localhost:8100', requiredInProduction),
+      healthPath: '/health/ping',
+      timeout: {
+        response: Number(get('MAS_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('MAS_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('MAS_API_TIMEOUT_RESPONSE', 10000))),
+    },
     exampleApi: {
       url: get('EXAMPLE_API_URL', 'http://localhost:8080', requiredInProduction),
       healthPath: '/health/ping',
@@ -107,5 +116,9 @@ export default {
   manageProbationUrl: get('MANAGE_PEOPLE_ON_PROBATION_URL', 'http://localhost:3000', requiredInProduction),
   delius: {
     link: get('DELIUS_LINK', 'https://ndelius-dummy-url', requiredInProduction),
+  },
+  flipt: {
+    url: get('FLIPT_URL', 'http://localhost:8100', requiredInProduction),
+    token: get('FLIPT_TOKEN', 'FLIPT_TOKEN', requiredInProduction),
   },
 }
