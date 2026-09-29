@@ -23,7 +23,7 @@ export const login = async (
     roles = DEFAULT_ROLES,
     active = true,
     authSource = 'nomis',
-    flags = [],
+    flags = [{ key: 'enableTestKey', enabled: true }],
   }: UserToken & { active?: boolean; flags?: Array<{ key: string; enabled?: boolean }> } = {},
 ) => {
   await Promise.all([
