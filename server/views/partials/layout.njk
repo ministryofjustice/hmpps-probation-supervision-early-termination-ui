@@ -33,6 +33,7 @@
 {% endblock %}
 
 {% block bodyEnd %}
+  <script type="module" src="{{ '/assets/js/index.js' | assetMap }}"></script>
   {% if feComponents.jsIncludes %}
     {% for js in feComponents.jsIncludes %}
       <script  type="module" src="{{ js }}" nonce="{{ cspNonce }}"></script>
@@ -43,4 +44,11 @@
   <script nonce="{{ cspNonce }}">
     window.csrfToken = "{{ csrfToken }}";
   </script>
+  <div
+    id="app-insights-config"
+    data-connection-string="{{ applicationInsightsConnectionString | default(' ') | escape }}"
+    data-role-name="{{ applicationInsightsRoleName | escape }}"
+    data-user-name="{{ user.username | escape }}"
+  ></div>
+
 {% endblock %}
