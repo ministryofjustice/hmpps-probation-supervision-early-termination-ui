@@ -44,9 +44,11 @@
   <script nonce="{{ cspNonce }}">
     window.csrfToken = "{{ csrfToken }}";
   </script>
-  <script nonce="{{ cspNonce }}">
-    document.addEventListener('DOMContentLoaded', function () {
-      document.initialiseTelemetry('{{ applicationInsightsConnectionString | default(' ') }}', '{{ applicationInsightsRoleName }}', '{{ user.username }}')
-    })
-  </script>
+  <div
+    id="app-insights-config"
+    data-connection-string="{{ applicationInsightsConnectionString | default(' ') | escape }}"
+    data-role-name="{{ applicationInsightsRoleName | escape }}"
+    data-user-name="{{ user.username | escape }}"
+  ></div>
+
 {% endblock %}
