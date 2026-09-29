@@ -25,7 +25,7 @@ document.initialiseTelemetry = (applicationInsightsConnectionString, application
     if (element.className === 'moj-filter__tag') {
       return 'Clear Filter Tag'
     }
-    if (element.classList?.contains('moj-datepicker')) {
+    if (element && element.classList && element.classList.contains('moj-datepicker')) {
       return 'Date selected'
     }
     return ''
@@ -66,17 +66,12 @@ document.initialiseTelemetry = (applicationInsightsConnectionString, application
   appInsights.trackEvent({ name: 'screenSize', properties: { width: window.innerWidth, height: window.innerHeight } })
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function handleDOMContentLoaded() {
   const config = document.getElementById('app-insights-config')
 
   if (!config) {
     return
   }
 
-  document.initialiseTelemetry(
-    config.dataset.connectionString,
-    config.dataset.roleName,
-    config.dataset.userName
-  )
+  document.initialiseTelemetry(config.dataset.connectionString, config.dataset.roleName, config.dataset.userName)
 })
-
