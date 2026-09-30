@@ -9,8 +9,8 @@ export default class MasApiClient extends RestClient {
     super('Manage a Supervision API', config.apis.masApi, logger, authenticationClient)
   }
 
-  async getUserDetails(username: string): Promise<HmppsUser | null> {
-    return this.get<HmppsUser | null>(
+  async getUserDetails(username: string): Promise<MasUserDetails | null> {
+    return this.get<MasUserDetails | null>(
       {
         path: `/user/${username}`,
         errorHandler: (_path, _method, error) => {
@@ -21,4 +21,22 @@ export default class MasApiClient extends RestClient {
       asSystem(username),
     )
   }
+}
+
+export interface MasUserDetails {
+  userId: number
+  username: string
+  firstName: string
+  surname: string
+  email?: string
+  enabled: boolean
+  roles: string[]
+  staff?: {
+    probationDeliveryUnits?: ProbationDeliveryUnit[]
+  }
+}
+
+export interface ProbationDeliveryUnit {
+  code: string
+  description: string
 }

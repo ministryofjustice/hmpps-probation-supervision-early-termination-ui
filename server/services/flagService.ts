@@ -1,54 +1,60 @@
-import { EvaluationRequest, EvaluationResponse, FliptEvaluationClient } from '@flipt-io/flipt-client'
+import { FliptClient } from '@flipt-io/flipt-client-js'
+import type { EvaluationRequest, EvaluationResponse } from '@flipt-io/flipt-client-js'
 import config from '../config'
 import { FeatureFlags } from '../data/model/featureFlags'
 import logger from '../../logger'
 
 export default class FlagService {
+  private readonly namespace = 'probation-supervision-early-termination-ui'
+
+  private fliptClientPromise?: Promise<FliptClient>
+
+  private getFliptClient(): Promise<FliptClient> {
+    if (!this.fliptClientPromise) {
+      this.fliptClientPromise = FliptClient.init({
+        namespace: this.namespace,
+        url: config.flipt.url,
+        authentication: { clientToken: config.flipt.token },
+      })
+    }
+
+    return this.fliptClientPromise!
+  }
+
   async getFlags(context: { email?: string }): Promise<FeatureFlags> {
-    const namespace = 'probation-supervision-early-termination-ui'
-    const fliptEvaluationClient = await FliptEvaluationClient.init(namespace, {
-      url: config.flipt.url,
-      authentication: {
-        clientToken: config.flipt.token,
-      },
-    })
-    const flagList: string[] = []
+    const fliptClient = await this.getFliptClient()
+
+    try {
+      await fliptClient.refresh()
+    } catch (error) {
+      logger.warn(`Failed to refresh Flipt flags: ${error}`)
+    }
+
     const featureFlags = new FeatureFlags()
-    Object.keys(featureFlags).forEach(key => {
-      if (Object.prototype.hasOwnProperty.call(featureFlags, key)) {
-        flagList.push(key)
-      }
-    })
+    const flagList = Object.keys(featureFlags)
 
-    const buildRequest = (flag: string): EvaluationRequest => {
-      return {
-        flagKey: flag,
-        entityId: context?.email ? context.email.toLowerCase() || 'anonymous' : flag,
-        context: {
-          ...(context?.email ? { email: context.email.toLowerCase() } : {}),
-        },
-      }
-    }
+    const requests: EvaluationRequest[] = flagList.map(flag => ({
+      flagKey: flag,
+      entityId: context.email?.toLowerCase() || 'anonymous',
+      context: { ...(context.email ? { email: context.email.toLowerCase() } : {}) },
+    }))
 
-    const requests: EvaluationRequest[] = flagList.flatMap(flag => {
-      return [buildRequest(flag)]
-    })
+    const flags = fliptClient.evaluateBatch(requests)
 
-    const flags = fliptEvaluationClient.evaluateBatch(requests)
+    const responsesFor = (results: EvaluationResponse[], key: string) =>
+      results.filter(response => response.booleanEvaluationResponse?.flagKey === key)
 
-    function responsesFor(results: EvaluationResponse[], key: string) {
-      return results.filter(r => r.booleanEvaluationResponse?.flagKey === key)
-    }
+    flagList.forEach(flag => {
+      const matching = responsesFor(flags.responses, flag)
 
-    flagList.forEach(f => {
-      const matching = responsesFor(flags.responses, f)
       if (matching.length === 1) {
-        featureFlags[f] = <boolean>matching[0]?.booleanEvaluationResponse?.enabled
+        featureFlags[flag] = Boolean(matching[0].booleanEvaluationResponse?.enabled)
       } else {
-        logger.warn(`Expected exactly 1 response for flag ${f}, got ${matching.length} — defaulting to false`)
-        featureFlags[f] = false
+        logger.warn(`Expected exactly 1 response for flag ${flag}, got ${matching.length} — defaulting to false`)
+        featureFlags[flag] = false
       }
     })
+
     return featureFlags
   }
 }

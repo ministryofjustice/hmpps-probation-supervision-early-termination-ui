@@ -24,36 +24,75 @@ describe('MasApiClient', () => {
   describe('getUserDetails', () => {
     it('returns user details when user exists', async () => {
       const user = {
-        roles: ['OIBT0002'],
         userId: 1234,
-        username: 'USER1',
+        username: 'user1',
         firstName: 'Test',
         surname: 'User',
         email: 'user@email.com',
         enabled: true,
+        roles: ['OIBT0002'],
         staff: {
-          probationDeliveryUnits: [{ code: 'N03CTM', description: 'Test PDU' }],
+          probationDeliveryUnits: [
+            {
+              code: 'N03CTM',
+              description: 'Test PDU',
+            },
+          ],
         },
       }
+
       nock(config.apis.masApi.url)
-        .get('/user/test-user')
+        .get('/user/user1')
         .matchHeader('authorization', 'Bearer test-system-token')
         .reply(200, user)
 
-      const result = await masApiClient.getUserDetails('test-user')
+      const result = await masApiClient.getUserDetails('user1')
 
       expect(result).toEqual(user)
+      expect(mockAuthenticationClient.getToken).toHaveBeenCalled()
     })
 
     it('returns null when a 404 is returned', async () => {
       nock(config.apis.masApi.url)
-        .get('/user/test-user')
+        .get('/user/user1')
         .matchHeader('authorization', 'Bearer test-system-token')
         .reply(404)
 
-      const result = await masApiClient.getUserDetails('test-user')
+      const result = await masApiClient.getUserDetails('user1')
 
-      expect(result).toEqual(null)
+      expect(result).toBeNull()
+    })
+
+    it('throws when the API returns an error other than 404', async () => {
+      const error = new Error('Internal server error')
+      Object.assign(error, { responseStatus: 500 })
+
+      jest.spyOn(masApiClient, 'get').mockImplementation(async options => {
+        options.errorHandler?.('/user/user1', 'GET', error)
+        return null
+      })
+
+      await expect(masApiClient.getUserDetails('user1')).rejects.toThrow('Internal server error')
+    })
+
+    it('uses the supplied username in the request path', async () => {
+      const user = {
+        userId: 1234,
+        username: 'user1',
+        firstName: 'Tom',
+        surname: 'Cruse',
+        enabled: true,
+        roles: [],
+      }
+
+      nock(config.apis.masApi.url)
+        .get('/user/user1')
+        .matchHeader('authorization', 'Bearer test-system-token')
+        .reply(200, user)
+
+      const result = await masApiClient.getUserDetails('user1')
+
+      expect(result).toEqual(user)
     })
   })
 })

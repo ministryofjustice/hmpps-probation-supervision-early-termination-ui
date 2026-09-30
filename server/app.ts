@@ -38,9 +38,9 @@ export default function createApp(services: Services): express.Application {
   nunjucksSetup(app)
   app.use(setUpAuthentication())
   app.use(authorisationMiddleware())
-  app.use(setUpFlags(services))
   app.use(setUpCsrf())
   app.use(setUpCurrentUser(services.masApiClient))
+  app.use(setUpFlags(services))
   app.use(getFrontendComponents(services.probationComponentsService))
   // For prison users, register the `addUserMetadataToTelemetry` middleware after middleware that retrieves caseload data.
   app.use(telemetryMiddleware.addUserMetadataToTelemetry())

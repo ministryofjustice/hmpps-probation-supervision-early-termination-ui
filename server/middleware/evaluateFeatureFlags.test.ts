@@ -26,10 +26,10 @@ describe('/middleware/evaluateFeatureFlags', () => {
   const nextSpy = jest.fn()
 
   describe('Flags returned', () => {
-    const getFlagsSpy = jest
-      .spyOn(FlagService.prototype, 'getFlags')
-      .mockImplementationOnce(() => Promise.resolve(mockFlags))
+    const getFlagsSpy = jest.spyOn(FlagService.prototype, 'getFlags')
     beforeEach(async () => {
+      getFlagsSpy.mockResolvedValue(mockFlags)
+      delete res.locals.flags
       const flagService = new FlagService()
       await evaluateFeatureFlags(flagService)(req, res, nextSpy)
     })
@@ -74,7 +74,7 @@ describe('/middleware/evaluateFeatureFlags', () => {
       expect(loggerSpy).toHaveBeenCalledWith(mockError, `Failed to retrieve flipt feature flags`)
     })
     it('should call next()', () => {
-      expect(nextSpy).toHaveBeenCalledWith(mockError)
+      expect(nextSpy).toHaveBeenCalledWith()
     })
   })
 })

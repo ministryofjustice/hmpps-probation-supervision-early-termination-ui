@@ -14,7 +14,8 @@ export default function evaluateFeatureFlags(flagService: FlagService): RequestH
       next()
     } catch (error) {
       logger.error(error, `Failed to retrieve flipt feature flags`)
-      next(error)
+      res.locals.flags = {}
+      next()
     }
   }
 }
