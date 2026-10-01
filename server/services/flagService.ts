@@ -15,6 +15,11 @@ export default class FlagService {
         namespace: this.namespace,
         url: config.flipt.url,
         authentication: { clientToken: config.flipt.token },
+        updateInterval: config.flipt.refreshInterval,
+      }).catch((error: any) => {
+        logger.error(error, 'Failed to initialise Flipt client')
+        this.fliptClientPromise = undefined
+        throw error
       })
     }
 
@@ -23,12 +28,6 @@ export default class FlagService {
 
   async getFlags(context: { email?: string }): Promise<FeatureFlags> {
     const fliptClient = await this.getFliptClient()
-
-    try {
-      await fliptClient.refresh()
-    } catch (error) {
-      logger.warn(`Failed to refresh Flipt flags: ${error}`)
-    }
 
     const featureFlags = new FeatureFlags()
     const flagList = Object.keys(featureFlags)
@@ -56,5 +55,13 @@ export default class FlagService {
     })
 
     return featureFlags
+  }
+
+  async close(): Promise<void> {
+    const client = await this.fliptClientPromise
+
+    if (client) {
+      client.close()
+    }
   }
 }

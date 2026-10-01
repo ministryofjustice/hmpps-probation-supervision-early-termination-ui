@@ -31,8 +31,12 @@ export default function setUpCurrentUser(masClient: MasApiClient) {
         userRoles: roles.map(role => role.substring(role.indexOf('_') + 1)),
       }
 
-      const user = await masClient.getUserDetails(res.locals.user.username)
-      res.locals.user.email = user?.email
+      try {
+        const user = await masClient.getUserDetails(res.locals.user.username)
+        res.locals.user.email = user?.email
+      } catch (error) {
+        logger.warn(error, `Failed to retrieve user details for: ${res.locals.user.username}`)
+      }
 
       if (res.locals.user.authSource === 'nomis') {
         res.locals.user.staffId = userId !== undefined ? parseInt(userId, 10) : undefined
