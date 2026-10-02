@@ -2,15 +2,18 @@ import type { Request, Response } from 'express'
 import baseController from './baseController'
 import config from './config'
 
-jest.mock('./config', () => ({
-  appInsights: {
-    connectionString: 'test-connection-string',
+vi.mock('./config', () => ({
+  __esModule: true,
+  default: {
+    appInsights: {
+      connectionString: 'test-connection-string',
+    },
   },
 }))
 
-jest.mock('./applicationInfo', () => ({
+vi.mock('./applicationInfo', () => ({
   __esModule: true,
-  default: jest.fn(() => ({
+  default: vi.fn(() => ({
     applicationName: 'test-app-name',
     buildNumber: '123',
     gitRef: 'abcdef1234567',
@@ -21,10 +24,10 @@ jest.mock('./applicationInfo', () => ({
 }))
 
 describe('baseController', () => {
-  let next: jest.Mock
+  let next: ReturnType<typeof vi.fn>
 
   beforeEach(() => {
-    next = jest.fn()
+    next = vi.fn()
   })
 
   function createReqRes(path: string): { req: Request; res: Response } {

@@ -17,8 +17,8 @@ function createToken(authorities: string[]) {
 }
 
 describe('authorisationMiddleware', () => {
-  const req: Request = {} as jest.Mocked<Request>
-  const next = jest.fn()
+  const req: Request = {} as Request
+  const next = vi.fn()
 
   function createResWithToken({ authorities }: { authorities: string[] }): Response {
     return {
@@ -27,12 +27,12 @@ describe('authorisationMiddleware', () => {
           token: createToken(authorities),
         },
       },
-      redirect: jest.fn(),
+      redirect: vi.fn(),
     } as unknown as Response
   }
 
   beforeEach(() => {
-    jest.resetAllMocks()
+    vi.resetAllMocks()
   })
 
   it('should return next when no required roles', () => {
