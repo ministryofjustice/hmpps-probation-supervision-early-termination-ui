@@ -1,24 +1,27 @@
 import nock from 'nock'
 import type { AuthenticationClient } from '@ministryofjustice/hmpps-auth-clients'
 import { asSystem } from '@ministryofjustice/hmpps-rest-client'
+import type { Mock } from 'vitest'
 import config from '../config'
 import MasApiClient from './masApiClient'
 
 describe('MasApiClient', () => {
   let masApiClient: MasApiClient
-  let mockAuthenticationClient: jest.Mocked<AuthenticationClient>
+  let mockAuthenticationClient: Partial<AuthenticationClient>
+  let getToken: Mock
 
   beforeEach(() => {
+    getToken = vi.fn().mockResolvedValue('test-system-token')
     mockAuthenticationClient = {
-      getToken: jest.fn().mockResolvedValue('test-system-token'),
-    } as unknown as jest.Mocked<AuthenticationClient>
+      getToken,
+    }
 
-    masApiClient = new MasApiClient(mockAuthenticationClient)
+    masApiClient = new MasApiClient(mockAuthenticationClient as AuthenticationClient)
   })
 
   afterEach(() => {
     nock.cleanAll()
-    jest.resetAllMocks()
+    vi.resetAllMocks()
   })
 
   describe('getUserDetails', () => {
@@ -49,7 +52,7 @@ describe('MasApiClient', () => {
       const result = await masApiClient.getUserDetails('user1')
 
       expect(result).toEqual(user)
-      expect(mockAuthenticationClient.getToken).toHaveBeenCalled()
+      expect(getToken).toHaveBeenCalled()
     })
 
     it('returns null when a 404 is returned', async () => {
@@ -67,7 +70,7 @@ describe('MasApiClient', () => {
       const error = new Error('Internal server error')
       Object.assign(error, { responseStatus: 500 })
 
-      jest.spyOn(masApiClient, 'get').mockImplementation(async options => {
+      vi.spyOn(masApiClient, 'get').mockImplementation(async options => {
         options.errorHandler?.('/user/user1', 'GET', error)
         return null
       })

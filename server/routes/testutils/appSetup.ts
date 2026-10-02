@@ -10,7 +10,7 @@ import { HmppsUser } from '../../interfaces/hmppsUser'
 import setUpWebSession from '../../middleware/setUpWebSession'
 import type { ApplicationInfo } from '../../applicationInfo'
 
-jest.mock('@ministryofjustice/hmpps-audit-client')
+vi.mock('@ministryofjustice/hmpps-audit-client')
 
 export const user: HmppsUser = {
   name: 'FIRST LAST',
@@ -33,7 +33,7 @@ const applicationInfo: ApplicationInfo = {
   branchName: 'main',
 }
 
-export const flashProvider = jest.fn()
+export const flashProvider = vi.fn()
 
 function appSetup(services: Partial<Services>, production: boolean, userSupplier: () => HmppsUser): Express {
   const app = express()
@@ -72,7 +72,7 @@ function appSetup(services: Partial<Services>, production: boolean, userSupplier
 export function appWithAllRoutes({
   production = false,
   services = {
-    auditService: new AuditService({} as never) as jest.Mocked<AuditService>,
+    auditService: vi.mocked(new AuditService({} as never)),
   },
   userSupplier = () => user,
 }: {

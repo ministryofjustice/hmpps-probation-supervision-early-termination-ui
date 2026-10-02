@@ -5,8 +5,8 @@ import { Services } from '../services'
 import { Page } from '../routes'
 
 describe('auditSearchRequest', () => {
-  const logAuditEvent = jest.fn()
-  const next = jest.fn()
+  const logAuditEvent = vi.fn()
+  const next = vi.fn()
 
   const services = {
     applicationInfo: { gitRef: 'abc1234' },
@@ -22,7 +22,7 @@ describe('auditSearchRequest', () => {
   } as unknown as Response
 
   beforeEach(() => {
-    jest.resetAllMocks()
+    vi.resetAllMocks()
   })
 
   it('logs an audit event with details from the request and user', async () => {

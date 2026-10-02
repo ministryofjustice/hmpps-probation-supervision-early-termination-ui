@@ -6,11 +6,11 @@ import ExampleService from '../services/exampleService'
 import ExampleApiClient from '../data/exampleApiClient'
 import { Page } from '.'
 
-jest.mock('@ministryofjustice/hmpps-audit-client')
-jest.mock('../services/exampleService')
+vi.mock('@ministryofjustice/hmpps-audit-client')
+vi.mock('../services/exampleService')
 
-const auditService = new AuditService({} as never) as jest.Mocked<AuditService>
-const exampleService = new ExampleService({} as ExampleApiClient) as jest.Mocked<ExampleService>
+const auditService = vi.mocked(new AuditService({} as never))
+const exampleService = vi.mocked(new ExampleService({} as ExampleApiClient))
 
 let app: Express
 
@@ -25,7 +25,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  jest.resetAllMocks()
+  vi.resetAllMocks()
 })
 
 describe('GET /', () => {

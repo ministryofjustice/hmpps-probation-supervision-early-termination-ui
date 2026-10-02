@@ -2,10 +2,10 @@ import type { AuthenticationClient } from '@ministryofjustice/hmpps-auth-clients
 import ExampleApiClient from '../data/exampleApiClient'
 import ExampleService from './exampleService'
 
-jest.mock('../data/exampleApiClient')
+vi.mock('../data/exampleApiClient')
 
 describe('ExampleService', () => {
-  const exampleApiClient = new ExampleApiClient({} as AuthenticationClient) as jest.Mocked<ExampleApiClient>
+  const exampleApiClient = vi.mocked(new ExampleApiClient({} as AuthenticationClient))
   let exampleService: ExampleService
 
   beforeEach(() => {
