@@ -1,20 +1,22 @@
 import nock from 'nock'
 import type { AuthenticationClient } from '@ministryofjustice/hmpps-auth-clients'
 import { asSystem } from '@ministryofjustice/hmpps-rest-client'
-import type { Mocked } from 'vitest'
+import type { Mock } from 'vitest'
 import config from '../config'
 import MasApiClient from './masApiClient'
 
 describe('MasApiClient', () => {
   let masApiClient: MasApiClient
-  let mockAuthenticationClient: Mocked<AuthenticationClient>
+  let mockAuthenticationClient: Partial<AuthenticationClient>
+  let getToken: Mock
 
   beforeEach(() => {
+    getToken = vi.fn().mockResolvedValue('test-system-token')
     mockAuthenticationClient = {
-      getToken: vi.fn().mockResolvedValue('test-system-token'),
-    } as unknown as Mocked<AuthenticationClient>
+      getToken,
+    }
 
-    masApiClient = new MasApiClient(mockAuthenticationClient)
+    masApiClient = new MasApiClient(mockAuthenticationClient as AuthenticationClient)
   })
 
   afterEach(() => {
@@ -50,7 +52,7 @@ describe('MasApiClient', () => {
       const result = await masApiClient.getUserDetails('user1')
 
       expect(result).toEqual(user)
-      expect(mockAuthenticationClient.getToken).toHaveBeenCalled()
+      expect(getToken).toHaveBeenCalled()
     })
 
     it('returns null when a 404 is returned', async () => {

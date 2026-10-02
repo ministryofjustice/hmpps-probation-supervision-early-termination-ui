@@ -1,7 +1,6 @@
 import express, { Express } from 'express'
 import { NotFound } from 'http-errors'
 import { AuditService } from '@ministryofjustice/hmpps-audit-client'
-import type { Mocked } from 'vitest'
 
 import routes from '../index'
 import nunjucksSetup from '../../utils/nunjucksSetup'
@@ -73,7 +72,7 @@ function appSetup(services: Partial<Services>, production: boolean, userSupplier
 export function appWithAllRoutes({
   production = false,
   services = {
-    auditService: new AuditService({} as never) as Mocked<AuditService>,
+    auditService: vi.mocked(new AuditService({} as never)),
   },
   userSupplier = () => user,
 }: {

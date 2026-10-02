@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express'
+import type { Mock } from 'vitest'
 import getFrontendComponents from './probationFEComponentsMiddleware'
 
 import logger from '../../logger'
@@ -9,7 +10,7 @@ vi.mock('../../logger', () => ({
 }))
 
 describe('ProbationFEComponentsMiddleware', () => {
-  let next: ReturnType<typeof vi.fn>
+  let next: Mock
 
   beforeEach(() => {
     vi.resetAllMocks()

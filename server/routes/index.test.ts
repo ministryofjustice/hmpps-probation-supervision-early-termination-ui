@@ -1,6 +1,5 @@
 import type { Express } from 'express'
 import { AuditService } from '@ministryofjustice/hmpps-audit-client'
-import type { Mocked } from 'vitest'
 import request from 'supertest'
 import { appWithAllRoutes, user } from './testutils/appSetup'
 import ExampleService from '../services/exampleService'
@@ -10,8 +9,8 @@ import { Page } from '.'
 vi.mock('@ministryofjustice/hmpps-audit-client')
 vi.mock('../services/exampleService')
 
-const auditService = new AuditService({} as never) as Mocked<AuditService>
-const exampleService = new ExampleService({} as ExampleApiClient) as Mocked<ExampleService>
+const auditService = vi.mocked(new AuditService({} as never))
+const exampleService = vi.mocked(new ExampleService({} as ExampleApiClient))
 
 let app: Express
 

@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express'
+import type { Mock } from 'vitest'
 import baseController from './baseController'
 import config from './config'
 
@@ -24,7 +25,7 @@ vi.mock('./applicationInfo', () => ({
 }))
 
 describe('baseController', () => {
-  let next: ReturnType<typeof vi.fn>
+  let next: Mock
 
   beforeEach(() => {
     next = vi.fn()
