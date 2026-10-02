@@ -1,19 +1,21 @@
 import nock from 'nock'
 import type { AuthenticationClient } from '@ministryofjustice/hmpps-auth-clients'
-import type { Mocked } from 'vitest'
+import type { Mock } from 'vitest'
 import ExampleApiClient from './exampleApiClient'
 import config from '../config'
 
 describe('ExampleApiClient', () => {
   let exampleApiClient: ExampleApiClient
-  let mockAuthenticationClient: Mocked<AuthenticationClient>
+  let mockAuthenticationClient: Partial<AuthenticationClient>
+  let getToken: Mock
 
   beforeEach(() => {
+    getToken = vi.fn().mockResolvedValue('test-system-token')
     mockAuthenticationClient = {
-      getToken: vi.fn().mockResolvedValue('test-system-token'),
-    } as unknown as Mocked<AuthenticationClient>
+      getToken,
+    }
 
-    exampleApiClient = new ExampleApiClient(mockAuthenticationClient)
+    exampleApiClient = new ExampleApiClient(mockAuthenticationClient as AuthenticationClient)
   })
 
   afterEach(() => {
@@ -31,7 +33,7 @@ describe('ExampleApiClient', () => {
       const response = await exampleApiClient.getCurrentTime()
 
       expect(response).toEqual({ time: '2025-01-01T12:00:00Z' })
-      expect(mockAuthenticationClient.getToken).toHaveBeenCalledTimes(1)
+      expect(getToken).toHaveBeenCalledTimes(1)
     })
   })
 })
