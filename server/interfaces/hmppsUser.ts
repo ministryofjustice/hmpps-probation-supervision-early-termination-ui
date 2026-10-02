@@ -14,6 +14,7 @@ export interface BaseUser {
   displayName: string
   userRoles: string[]
   token: string
+  email?: string
 }
 
 /**

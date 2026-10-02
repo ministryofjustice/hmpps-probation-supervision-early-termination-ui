@@ -4,9 +4,10 @@ import ExampleService from './exampleService'
 import logger from '../../logger'
 import config from '../config'
 import ProbationComponentsService from './ProbationComponentsService'
+import FlagService from './flagService'
 
 export const services = () => {
-  const { applicationInfo, exampleApiClient, probationFrontendComponentsApiClient } = dataAccess()
+  const { applicationInfo, exampleApiClient, probationFrontendComponentsApiClient, masApiClient } = dataAccess()
 
   const auditService = AuditServiceFactory.createInstance(config.sqs.audit, logger)
 
@@ -14,6 +15,8 @@ export const services = () => {
     applicationInfo,
     auditService,
     probationComponentsService: new ProbationComponentsService(probationFrontendComponentsApiClient),
+    flagService: new FlagService(),
+    masApiClient,
     exampleService: new ExampleService(exampleApiClient),
   }
 }

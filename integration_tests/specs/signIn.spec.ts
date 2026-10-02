@@ -80,4 +80,12 @@ test.describe('SignIn', () => {
     const homePage = await HomePage.verifyOnPage(page)
     await expect(homePage.usersName).toHaveText('S. Othertestuser')
   })
+
+  test('check feature flag is enabled', async ({ page }) => {
+    await login(page)
+
+    const homePage = await HomePage.verifyOnPage(page)
+
+    await expect(page.locator('[data-qa="enableFlag"]')).toHaveText('Flag is enabled')
+  })
 })

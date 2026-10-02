@@ -9,11 +9,3 @@ initialiseTelemetry({
   .addFilter(telemetry.processors.filterSpanWherePath(['/health', '/ping', '/info', '/assets/*', '/favicon.ico']))
   .addModifier(telemetry.processors.enrichSpanNameWithHttpRoute())
   .startRecording()
-
-const shutdown = async () => {
-  await flushTelemetry()
-  process.exit(0)
-}
-
-process.on('SIGTERM', () => shutdown())
-process.on('SIGINT', () => shutdown())

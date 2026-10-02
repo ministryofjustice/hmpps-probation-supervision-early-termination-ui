@@ -21,6 +21,7 @@ generic-service:
     MANAGE_PEOPLE_ON_PROBATION_URL: 'https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk'
     DELIUS_LINK: 'https://ndelius.test.probation.service.justice.gov.uk'
     FLIPT_URL: 'https://feature-flags-manage-people-on-probation-dev.hmpps.service.justice.gov.uk'
+    MAS_API_URL: 'https://manage-supervision-and-delius-dev.hmpps.service.justice.gov.uk'
 
   allowlist:
     # Configure groups as appropriate to give the minimum ingress access required:

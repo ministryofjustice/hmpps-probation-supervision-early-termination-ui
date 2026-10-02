@@ -38,6 +38,7 @@
     "@ministryofjustice/hmpps-azure-telemetry": "1.1.0",
     "@ministryofjustice/hmpps-monitoring": "^2.1.0",
     "@ministryofjustice/hmpps-rest-client": "^2.2.0",
+    "@flipt-io/flipt-client-js": "^0.5.0",
     "@microsoft/applicationinsights-web": "^3.4.4",
     "@microsoft/applicationinsights-clickanalytics-js": "^3.4.4",
     "bunyan": "^1.8.15",
@@ -96,11 +97,12 @@
     "nock": "^14.0.17",
     "supertest": "^7.2.2",
     "ts-jest": "^29.4.12",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "node-mocks-http": "1.18.1"
   },
   "overrides": {
     "@opentelemetry/core": "2.11.0",
-    "brace-expansion": "5.0.9",
+    "brace-expansion": "5.0.12",
     "js-yaml": "3.15.2"
   },
   "allowScripts": {

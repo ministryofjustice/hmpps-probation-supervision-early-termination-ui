@@ -8,5 +8,10 @@
   <h1>This site is under construction...</h1>
   <p>Please check back later when there is content to view.</p>
   <p data-qa="timestamp">The time is currently {{ currentTime }}</p>
+  {% if flags.enableTestKey %}
+  <p data-qa="enableFlag">Flag is enabled</p>
+  {% else %}
+    <p data-qa="disableFlag">Flag is disabled</p>
+  {% endif %}
 
 {% endblock %}

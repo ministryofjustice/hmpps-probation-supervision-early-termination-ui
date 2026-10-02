@@ -38,6 +38,7 @@ generic-service:
     AUDIT_SQS_REGION: 'eu-west-2'
     AUDIT_ENABLED: 'false'
     AUDIT_SERVICE_NAME: 'hmpps-probation-supervision-early-termination-ui' # Your audit service name
+    FLIPT_UPDATE_INTERVAL_SECONDS: 120
 
   # Pre-existing kubernetes secrets to load as environment variables in the deployment.
   # namespace_secrets:
@@ -64,6 +65,8 @@ generic-service:
     sqs-hmpps-audit-secret:
       AUDIT_SQS_QUEUE_URL: "sqs_queue_url"
     #  AUDIT_SQS_QUEUE_NAME: "sqs_queue_name"
+    flipt-bootstrap-token:
+      FLIPT_TOKEN: "TOKEN"
 
   allowlist:
     groups:
