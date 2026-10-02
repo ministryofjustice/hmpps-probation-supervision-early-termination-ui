@@ -1,5 +1,11 @@
 # Change log
 
+**October 2nd 2026** - Switch unit tests from Jest to Vitest
+
+Replaced Jest with Vitest for unit testing, including test configuration and script updates.
+
+CI-compatible reports remain available at `test_results/vitest/junit.xml` and `test_results/unit-test-reports.html`.
+
 **September 9th 2026** - Add user metadata to app insights telemetry
 
 Basic user metadata is added to app insights telemetry out of the box, including the auth source specific user id,
