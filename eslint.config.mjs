@@ -3,6 +3,13 @@ import hmppsConfig from '@ministryofjustice/eslint-config-hmpps'
 export default [
   ...hmppsConfig(),
   {
+    name: 'vitest-config-overrides',
+    files: ['vitest.config.mts'],
+    rules: {
+      'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    },
+  },
+  {
     name: 'overrides',
     files: ['**/*.ts'],
     ignores: ['**/*.js'],
