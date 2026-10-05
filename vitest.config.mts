@@ -6,11 +6,15 @@ export default defineConfig({
     globals: true,
     include: ['{server,job}/**/*.test.{ts,js,jsx,mjs}', '{server,job}/**/*.cy.{ts,js,jsx,mjs}'],
     coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html', 'json', 'lcov'],
       include: ['server/**/*.{ts,js,jsx,mjs}'],
+      reportsDirectory: 'test_results/vitest',
     },
     reporters: ['default', 'junit', 'html'],
     outputFile: {
       junit: 'test_results/vitest/junit.xml',
+      json: 'test_results/vitest/json.json',
       html: 'test_results/unit-test-reports.html',
     },
   },
