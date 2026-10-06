@@ -9,7 +9,6 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'html', 'json', 'lcov'],
       include: ['server/**/*.{ts,js,jsx,mjs}'],
-      reportsDirectory: 'test_results/vitest',
     },
     reporters: ['default', 'junit', 'html'],
     outputFile: {
