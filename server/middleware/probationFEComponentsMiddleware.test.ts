@@ -1,19 +1,20 @@
 import type { Request, Response } from 'express'
+import type { Mock } from 'vitest'
 import getFrontendComponents from './probationFEComponentsMiddleware'
 
 import logger from '../../logger'
 
-jest.mock('../../logger', () => ({
+vi.mock('../../logger', () => ({
   __esModule: true,
-  default: { info: jest.fn() },
+  default: { info: vi.fn() },
 }))
 
 describe('ProbationFEComponentsMiddleware', () => {
-  let next: jest.Mock
+  let next: Mock
 
   beforeEach(() => {
-    jest.resetAllMocks()
-    next = jest.fn()
+    vi.resetAllMocks()
+    next = vi.fn()
   })
 
   function createReqRes(options?: { session?: any; token?: string }): { req: Request; res: Response } {
@@ -39,7 +40,7 @@ describe('ProbationFEComponentsMiddleware', () => {
     }
     const { req, res } = createReqRes({ session: { feComponents: cached } })
 
-    const fakeService = { getProbationFEComponents: jest.fn() }
+    const fakeService = { getProbationFEComponents: vi.fn() }
 
     const mw = getFrontendComponents(fakeService as any)
     await mw(req, res, next)
@@ -52,7 +53,7 @@ describe('ProbationFEComponentsMiddleware', () => {
   it('skips fetching when no token is present and calls next', async () => {
     const { req, res } = createReqRes({ token: undefined })
 
-    const fakeService = { getProbationFEComponents: jest.fn() }
+    const fakeService = { getProbationFEComponents: vi.fn() }
 
     const mw = getFrontendComponents(fakeService as any)
     await mw(req, res, next)
@@ -70,7 +71,7 @@ describe('ProbationFEComponentsMiddleware', () => {
     const footerHtml = '<footer>ok</footer>'
 
     const fakeService = {
-      getProbationFEComponents: jest.fn().mockResolvedValue({
+      getProbationFEComponents: vi.fn().mockResolvedValue({
         header: { html: headerHtml, css: ['h.css'], javascript: ['h.js'] },
         footer: { html: footerHtml, css: ['f.css'], javascript: ['f.js'] },
       }),
@@ -100,7 +101,7 @@ describe('ProbationFEComponentsMiddleware', () => {
     const { req, res } = createReqRes({ token })
 
     const fakeService = {
-      getProbationFEComponents: jest.fn().mockRejectedValue(new Error('network')),
+      getProbationFEComponents: vi.fn().mockRejectedValue(new Error('network')),
     }
 
     const mw = getFrontendComponents(fakeService as any)

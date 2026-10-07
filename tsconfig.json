@@ -13,10 +13,27 @@
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "experimentalDecorators": true,
-    "typeRoots": ["./server/@types", "./node_modules/@types"],
-    "types": ["node", "jest"],
+    "typeRoots": [
+      "./server/@types",
+      "./node_modules/@types",
+      "./node_modules"
+    ],
+    "types": [
+      "node",
+      "vitest/globals"
+    ],
     "rootDir": "."
   },
-  "exclude": ["node_modules", "assets", "integration_tests", "dist", "esbuild", "eslint.config.mjs"],
-  "include": ["**/*.js", "**/*.ts"]
+  "exclude": [
+    "node_modules",
+    "assets",
+    "integration_tests",
+    "dist",
+    "esbuild",
+    "eslint.config.mjs"
+  ],
+  "include": [
+    "**/*.js",
+    "**/*.ts"
+  ]
 }

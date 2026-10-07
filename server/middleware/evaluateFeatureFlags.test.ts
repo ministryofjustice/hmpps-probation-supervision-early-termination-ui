@@ -7,7 +7,7 @@ import { FeatureFlags } from '../data/model/featureFlags'
 const mockFlags = {
   enableEnforcementContacts: true,
 }
-jest.mock('../services/flagService')
+vi.mock('../services/flagService')
 
 describe('/middleware/evaluateFeatureFlags', () => {
   const req = httpMocks.createRequest()
@@ -17,16 +17,16 @@ describe('/middleware/evaluateFeatureFlags', () => {
         username: 'user-1',
       },
     },
-    redirect: jest.fn().mockReturnThis(),
+    redirect: vi.fn().mockReturnThis(),
   } as any
 
   afterEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
-  const nextSpy = jest.fn()
+  const nextSpy = vi.fn()
 
   describe('Flags returned', () => {
-    const getFlagsSpy = jest.spyOn(FlagService.prototype, 'getFlags')
+    const getFlagsSpy = vi.spyOn(FlagService.prototype, 'getFlags')
     beforeEach(async () => {
       getFlagsSpy.mockResolvedValue(mockFlags)
       delete res.locals.flags
@@ -45,11 +45,11 @@ describe('/middleware/evaluateFeatureFlags', () => {
   })
 
   describe('No flags returned', () => {
-    const loggerSpy = jest.spyOn(logger, 'info')
+    const loggerSpy = vi.spyOn(logger, 'info')
     beforeEach(async () => {
-      jest
-        .spyOn(FlagService.prototype, 'getFlags')
-        .mockImplementationOnce(() => Promise.resolve(null as unknown as FeatureFlags))
+      vi.spyOn(FlagService.prototype, 'getFlags').mockImplementationOnce(() =>
+        Promise.resolve(null as unknown as FeatureFlags),
+      )
 
       const flagService = new FlagService()
       await evaluateFeatureFlags(flagService)(req, res, nextSpy)
@@ -63,10 +63,10 @@ describe('/middleware/evaluateFeatureFlags', () => {
   })
 
   describe('Response error', () => {
-    const loggerSpy = jest.spyOn(logger, 'error')
+    const loggerSpy = vi.spyOn(logger, 'error')
     const mockError = new Error('Error message')
     beforeEach(async () => {
-      jest.spyOn(FlagService.prototype, 'getFlags').mockImplementationOnce(() => Promise.reject(mockError))
+      vi.spyOn(FlagService.prototype, 'getFlags').mockImplementationOnce(() => Promise.reject(mockError))
       const flagService = new FlagService()
       await evaluateFeatureFlags(flagService)(req, res, nextSpy)
     })
