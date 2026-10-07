@@ -162,7 +162,7 @@ This project uses Vitest for unit testing.
 
 Test report artifacts are written to:
 
-- `test_results/vitest/junit.xml`
+- `test_results/jest/junit.xml`
 - `test_results/unit-test-reports.html`
 
 ### Running integration tests
