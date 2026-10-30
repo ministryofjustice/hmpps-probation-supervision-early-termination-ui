@@ -99,6 +99,7 @@
     "node-mocks-http": "1.18.1"
   },
   "overrides": {
+    "body-parser": "2.4.0",
     "@opentelemetry/core": "2.11.0",
     "brace-expansion": "5.0.12",
     "js-yaml": "5.4.2",
