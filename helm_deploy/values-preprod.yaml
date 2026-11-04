@@ -42,4 +42,4 @@ generic-service:
 
 
 generic-prometheus-alerts:
-  alertSeverity: manage-people-on-probation-alerts-nonprod
+  alertSeverityOverride: manage-people-on-probation-alerts-nonprod
